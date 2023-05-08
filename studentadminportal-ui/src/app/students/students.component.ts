@@ -15,7 +15,7 @@ export class StudentsComponent implements OnInit {
 
 
   students:Student[]=[];
-  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email','mobile', 'profileImageUrl','gender'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email','mobile','gender','edit'];
   dataSource: MatTableDataSource<Student>= new MatTableDataSource<Student>();
    
   //Paginator
@@ -35,10 +35,12 @@ export class StudentsComponent implements OnInit {
    //Fetch Students
    this
       .studentService
-      .getStudent()
+      .getStudents()
       .subscribe(
         (successResponse)=>{
           this.students=successResponse;
+
+          console.log(this.students);
           this.dataSource=new MatTableDataSource<Student>(this.students);
         
           if(this.matPaginator){
