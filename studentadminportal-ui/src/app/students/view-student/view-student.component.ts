@@ -44,18 +44,59 @@ export class ViewStudentComponent implements OnInit {
               private snackbar: MatSnackBar,
               private router:Router){}
 
+  isNewStudent = false;
+  header='';
+
   ngOnInit() :void{
     this.route.paramMap.subscribe(
       (params)=>{
         this.studentId=params.get('id');
 
         if(this.studentId){
-          this.studentService.getStudent(this.studentId)
-          .subscribe( 
+
+          //If the route contains the 'Add'      
+          if(this.studentId.toLowerCase() === 'Add'.toLowerCase()){
+           // -> new Student Functionality
+           this.isNewStudent=true;
+           this.header='Add New Student';
+          }
+
+          //otherwise         
+          else{
+           // -> Existing Student Functinality
+           this.isNewStudent=false;
+           this.header='Edit Student';
+           this.studentService
+          .getStudent(this.studentId).subscribe( 
             (successResponse)=>{
-             this.student = successResponse;
+
+              let _student: Student = successResponse;
+
+                if (_student.address == null || _student.address == undefined)
+                {
+                  _student.address = {
+                    id:'',
+                    physicalAddress:'',
+                    postalAddress:''
+                  };
+                }
+
+                if (_student.gender == null || _student.gender == undefined)
+                {
+                  _student.gender = {
+                    id:'',
+                    description:''
+                  };
+                }
+
+             this.student = _student;
+
             }
-          );     
+          );    
+          }
+
+          
+           
           
           this.genderService.getGenderList()
           .subscribe(
@@ -98,9 +139,31 @@ export class ViewStudentComponent implements OnInit {
     },
     (errorResponse)=>{
 
-    });
+    }
+  );
    
   }
 
+
+  onAdd():void{
+    this.studentService.addStudent(this.student)
+    .subscribe(
+      (successResponse)=>{
+        this.snackbar.open("Added Successfully!!!",undefined,{
+          duration:2000
+        });
+        //Add and return to students page
   
-}
+        setTimeout(()=>{
+          this.router.navigateByUrl(`students/${successResponse.id}`);
+        },2000);
+      
+      },
+      (errorResponse)=>{
+        console.log(errorResponse);
+      }
+      );
+    }
+  }
+
+    
