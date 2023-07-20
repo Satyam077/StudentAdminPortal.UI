@@ -16,7 +16,7 @@ export class StudentsComponent implements OnInit {
 
   students:Student[]=[];
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email','mobile','gender','edit'];
-  dataSource: MatTableDataSource<Student>= new MatTableDataSource<Student>();
+  dataSource: MatTableDataSource<Student> = new MatTableDataSource<Student>();
    
   //Paginator
   @ViewChild(MatPaginator) matPaginator! : MatPaginator;
@@ -25,10 +25,10 @@ export class StudentsComponent implements OnInit {
   filterString='';
 
   //Paginator Sorting
- // @ViewChild(MatSort) matSort! : MatSort;
+  @ViewChild(MatSort) matSort! : MatSort;
 
   //Inject service to get
-  constructor(private studentService: StudentService){}
+  constructor(private studentService: StudentService){ }
 
   ngOnInit() {
 
@@ -41,23 +41,21 @@ export class StudentsComponent implements OnInit {
           this.students=successResponse;
 
           console.log(this.students);
-          this.dataSource=new MatTableDataSource<Student>(this.students);
+          this.dataSource = new MatTableDataSource<Student>(this.students);
         
           if(this.matPaginator){
-            this.dataSource.paginator=this.matPaginator;
+            this.dataSource.paginator = this.matPaginator;
           }
 
-          //  if(this.matSort){
-          //    this.dataSource.sort = this.matSort;
-          //  }
-        
+            if(this.matSort){
+             this.dataSource.sort = this.matSort;
+           }       
         },
         (errorResponse)=>{
           console.log('err', errorResponse);
       }
    );
-
-  }
+}
  
 
   //Filter String to search

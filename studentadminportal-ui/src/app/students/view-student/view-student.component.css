@@ -1,7 +1,25 @@
-.top-row{
+.top-row {
     padding: 1em 0;
 }
 
-mat-form-field{
+mat-form-field {
     width: 100%;
+}
+
+.image-container {
+    height: 200px;
+    width: 200px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+.image-container img {
+    width: 200px;
+
 }
