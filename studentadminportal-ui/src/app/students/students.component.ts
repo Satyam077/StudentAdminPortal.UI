@@ -6,6 +6,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatSortModule} from '@angular/material/sort';
 
+import { Inject} from '@angular/core';
+
 @Component({
   selector: 'app-students',
   templateUrl: './students.component.html',
@@ -13,6 +15,7 @@ import {MatSortModule} from '@angular/material/sort';
 })
 export class StudentsComponent implements OnInit {
 
+ 
 
   students:Student[]=[];
   displayedColumns: string[] = ['firstName', 'lastName', 'dateOfBirth', 'email','mobile','gender','edit'];
@@ -26,6 +29,8 @@ export class StudentsComponent implements OnInit {
 
   //Paginator Sorting
   @ViewChild(MatSort) matSort! : MatSort;
+  
+  dialog: any;
 
   //Inject service to get
   constructor(private studentService: StudentService){ }
@@ -61,6 +66,10 @@ export class StudentsComponent implements OnInit {
   //Filter String to search
   filterStudents(){
     this.dataSource.filter=this.filterString.trim().toLowerCase();
+  }
+
+  popup(){
+    this.dialog.open(StudentsComponent);
   }
 
 }

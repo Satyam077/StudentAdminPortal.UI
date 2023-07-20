@@ -10,7 +10,8 @@
         <div class="col-xs-12">
             <input type="text" placeholder="Search" class="search-input" [(ngModel)]="filterString"
                 (keyup)="filterStudents()">
-            <a routerLink="/students/add" mat-raised-button color="primary" class="ml-1">Add new Student</a>
+
+            <a routerLink="/students/add" mat-raised-button color="primary" class="ml-1" (click)="popup()">Add new Student</a>
         </div>
     </div>
 </div>
@@ -72,7 +73,5 @@
 
         <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25,50, 100]" aria-label="Select page">
         </mat-paginator>
-
-
     </div>
 </div>
